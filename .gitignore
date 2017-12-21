@@ -1,6 +1,8 @@
 *.py[cod]
 __pycache__
 
+example/db.sqlite3
+
 # C extensions
 *.so
 
