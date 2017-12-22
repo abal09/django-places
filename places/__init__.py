@@ -10,7 +10,7 @@ if sys.version_info < (3, 0):
     sys.setdefaultencoding('utf8')
 
 default_app_config = 'places.apps.PlacesConfig'
-__version__ = '1.1.5'
+__version__ = '1.1.6'
 
 
 class Places(object):
