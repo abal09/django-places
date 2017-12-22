@@ -61,5 +61,5 @@ class PlacesWidget(forms.MultiWidget):
         css = {
             'all': ('places/places.css',)
         }
-        if settings.defaults['PLACES_USE_JQUERY']:
+        if settings.USE_JQUERY:
             js = ('//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js',) + js  # NOQA

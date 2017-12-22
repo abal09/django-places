@@ -12,7 +12,7 @@ class AppSettings(object):
         'MAP_WIDGET_HEIGHT': 480,
         'MAP_OPTIONS': {},
         'MARKER_OPTIONS': {},
-        'PLACES_USE_JQUERY': True
+        'USE_JQUERY': True
     }
 
     def __init__(self, django_settings):
