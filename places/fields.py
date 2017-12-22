@@ -51,7 +51,7 @@ class PlacesField(models.Field):
             pass
 
         try:
-            formatted_address = text_parts[1][0].replace(', ', '\n')[1:]
+            formatted_address = ','.join(text_parts[0][1].split(','))[1:]
         except Exception:
             pass
 
@@ -64,7 +64,6 @@ class PlacesField(models.Field):
         return str(value)
 
     def value_to_string(self, obj):
-        print('objRET', obj)
         value = self._get_val_from_obj(obj)
         return smart_text(value)
 
