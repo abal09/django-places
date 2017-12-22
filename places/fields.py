@@ -51,7 +51,7 @@ class PlacesField(models.Field):
             pass
 
         try:
-            formatted_address = ','.join(text_parts[0][1].split(','))[1:]
+            formatted_address = ','.join(text_parts[1][0].split(','))[1:]
         except Exception:
             pass
 
