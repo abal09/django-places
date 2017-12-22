@@ -9,11 +9,13 @@ from .conf import settings
 
 
 class PlacesWidget(forms.MultiWidget):
+
     def __init__(self, attrs=None):
         widgets = (
-            forms.TextInput(attrs={'data-geo': 'formatted_address',}),
-            forms.TextInput(attrs={'data-geo': 'lat',}),
-            forms.TextInput(attrs={'data-geo': 'lng',}),
+            forms.TextInput(attrs={'data-geo': 'formatted_address', }),
+            forms.Textarea(attrs={'data-geo': 'formatted_address_full', }),
+            forms.TextInput(attrs={'data-geo': 'lat', }),
+            forms.TextInput(attrs={'data-geo': 'lng', }),
         )
         super(PlacesWidget, self).__init__(widgets, attrs)
 
@@ -21,7 +23,8 @@ class PlacesWidget(forms.MultiWidget):
         if isinstance(value, six.text_type):
             return value.rsplit(',')
         if value:
-            return [value.place, value.latitude, value.longitude]
+            return [value.place, value.formatted_address, value.latitude,
+                    value.longitude]
         return [None, None]
 
     def format_output(self, rendered_widgets):
@@ -30,12 +33,16 @@ class PlacesWidget(forms.MultiWidget):
                 'html': rendered_widgets[0],
                 'label': _("place"),
             },
-            'latitude': {
+            'formatted_address': {
                 'html': rendered_widgets[1],
+                'label': _("formatted Address"),
+            },
+            'latitude': {
+                'html': rendered_widgets[2],
                 'label': _("latitude"),
             },
             'longitude': {
-                'html': rendered_widgets[2],
+                'html': rendered_widgets[3],
                 'label': _("longitude"),
             },
             'config': {
@@ -47,11 +54,12 @@ class PlacesWidget(forms.MultiWidget):
 
     class Media:
         js = (
-            '//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js', # NOQA
-            '//maps.googleapis.com/maps/api/js?key='+ settings.MAPS_API_KEY +'&libraries=places',  # NOQA
-            '//cdnjs.cloudflare.com/ajax/libs/geocomplete/1.7.0/jquery.geocomplete.js',  # NOQA
+            '//maps.googleapis.com/maps/api/js?key=' + settings.MAPS_API_KEY + '&libraries=places',  # NOQA
+            'places/jquery.geocomplete.min.js',  # NOQA
             'places/places.js',
         )
         css = {
             'all': ('places/places.css',)
         }
+        if settings.defaults['PLACES_USE_JQUERY']:
+            js = ('//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js',) + js  # NOQA

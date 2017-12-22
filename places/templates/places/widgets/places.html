@@ -6,6 +6,10 @@
         <td colspan="3" id="map_place">{{ place.html }}</td>
       </tr>
       <tr>
+        <td>{{ formatted_address.label|capfirst }}:</td>
+        <td colspan="3" id="map_formatted_address">{{ formatted_address.html }}</td>
+      </tr>
+      <tr>
         <td>{{ latitude.label|capfirst }}:</td>
         <td id="map_latitude">{{ latitude.html }}</td>
         <td>{{ longitude.label|capfirst }}:</td>

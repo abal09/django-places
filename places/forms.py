@@ -15,6 +15,8 @@ class PlacesField(forms.MultiValueField):
     def __init__(self, *args, **kwargs):
         fields = (
             forms.CharField(label=_('place')),
+            forms.CharField(
+                label=_('formatted_address'), widget=forms.Textarea()),
             forms.DecimalField(label=_('latitude')),
             forms.DecimalField(label=_('longitude')),
         )

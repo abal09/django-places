@@ -11,7 +11,8 @@ class AppSettings(object):
         'MAPS_API_KEY': None,
         'MAP_WIDGET_HEIGHT': 480,
         'MAP_OPTIONS': {},
-        'MARKER_OPTIONS': {}
+        'MARKER_OPTIONS': {},
+        'PLACES_USE_JQUERY': True
     }
 
     def __init__(self, django_settings):
@@ -20,7 +21,8 @@ class AppSettings(object):
         for setting in self.required_settings:
             prefixed_name = '%s_%s' % (self.prefix, setting)
             if not hasattr(self.django_settings, prefixed_name):
-                raise ImproperlyConfigured("The '%s' setting is required." % prefixed_name)
+                raise ImproperlyConfigured(
+                    "The '%s' setting is required." % prefixed_name)
 
     def __getattr__(self, name):
         prefixed_name = '%s_%s' % (self.prefix, name)
@@ -28,8 +30,10 @@ class AppSettings(object):
             return getattr(django_settings, prefixed_name)
         if name in self.defaults:
             return self.defaults[name]
-        import pdb; pdb.set_trace()
-        raise AttributeError("'AppSettings' object does not have a '%s' attribute" % name)
+        import pdb
+        pdb.set_trace()
+        raise AttributeError(
+            "'AppSettings' object does not have a '%s' attribute" % name)
 
 
 settings = AppSettings(django_settings)

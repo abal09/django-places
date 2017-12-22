@@ -30,6 +30,7 @@ Add the following settings and maps api key ( [read more here](https://developer
     MAP_WIDGET_HEIGHT=480
     MAP_OPTIONS={}
     MARKER_OPTIONS={}
+    USE_JQUERY=True
 
 Then use it in a project:
 

@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from decimal import Decimal
 
 import sys
 
 # Weird encoding python2 hack :'(
-if sys.version_info < (3,0):
+if sys.version_info < (3, 0):
     reload(sys)
     sys.setdefaultencoding('utf8')
 
-from decimal import Decimal
-
 default_app_config = 'places.apps.PlacesConfig'
-__version__ = '1.1.4'
+__version__ = '1.1.5'
 
 
 class Places(object):
 
-    def __init__(self, place, latitude, longitude):
+    def __init__(self, place, formatted_address, latitude, longitude):
 
         if isinstance(latitude, float) or isinstance(latitude, int):
             latitude = str(latitude)
@@ -24,11 +23,13 @@ class Places(object):
             longitude = str(longitude)
 
         self.place = place
+        self.formatted_address = formatted_address
         self.latitude = Decimal(latitude)
         self.longitude = Decimal(longitude)
 
     def __str__(self):
-        return "%s, %s, %s" % (self.place, self.latitude, self.longitude)
+        return "%s; %s; %s; %s" % (
+            self.place, self.formatted_address, self.latitude, self.longitude)
 
     def __repr__(self):
         return "Places(%s)" % str(self)
@@ -37,7 +38,9 @@ class Places(object):
         return len(str(self))
 
     def __eq__(self, other):
-        return isinstance(other, Places) and self.latitude == other.latitude and self.longitude == other.longitude
+        return isinstance(other, Places) and self.latitude == \
+            other.latitude and self.longitude == other.longitude
 
     def __ne__(self, other):
-        return not isinstance(other, Places) or self.latitude != other.latitude or self.longitude != other.longitude
+        return not isinstance(other, Places) or self.latitude != \
+            other.latitude or self.longitude != other.longitude
