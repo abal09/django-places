@@ -10,12 +10,13 @@ if sys.version_info < (3, 0):
     sys.setdefaultencoding('utf8')
 
 default_app_config = 'places.apps.PlacesConfig'
-__version__ = '1.1.6'
+__version__ = '1.1.7'
 
 
 class Places(object):
 
-    def __init__(self, place, formatted_address, latitude, longitude):
+    def __init__(
+            self, place, formatted_address, latitude, longitude, pincode):
 
         if isinstance(latitude, float) or isinstance(latitude, int):
             latitude = str(latitude)
@@ -26,10 +27,12 @@ class Places(object):
         self.formatted_address = formatted_address
         self.latitude = Decimal(latitude)
         self.longitude = Decimal(longitude)
+        self.pincode = pincode
 
     def __str__(self):
-        return "%s; %s; %s; %s" % (
-            self.place, self.formatted_address, self.latitude, self.longitude)
+        return "%s; %s; %s; %s; %s" % (
+            self.place, self.formatted_address, self.latitude,
+            self.longitude, self.pincode)
 
     def __repr__(self):
         return "Places(%s)" % str(self)

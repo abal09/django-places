@@ -28,20 +28,20 @@ class PlacesField(models.Field):
         if isinstance(value, Places):
             return value
         if isinstance(value, list):
-            return Places(value[0], value[1], value[2], value[3])
+            return Places(value[0], value[1], value[2], value[3], value[4])
         # print('getvalue: ', value)
-        value_parts = [Decimal(val) for val in value.split(';')[-2:]]
+        decimal_parts = [Decimal(val) for val in value.split(';')[-3:-1]]
         # print('value_parts: ', value_parts)
         text_parts = [[val] for val in value.split(';')[:2]]
         # print('text_parts: ', text_parts)
 
         try:
-            latitude = value_parts[0]
+            latitude = decimal_parts[0]
         except IndexError:
             latitude = '0.0'
 
         try:
-            longitude = value_parts[1]
+            longitude = decimal_parts[1]
         except IndexError:
             longitude = '0.0'
 
@@ -55,7 +55,12 @@ class PlacesField(models.Field):
         except Exception:
             pass
 
-        return Places(place, formatted_address, latitude, longitude)
+        try:
+            pincode = value.split(';')[-1]
+        except Exception:
+            pass
+
+        return Places(place, formatted_address, latitude, longitude, pincode)
 
     def from_db_value(self, value, expression, connection, context):
         return self.to_python(value)

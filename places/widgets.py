@@ -16,6 +16,7 @@ class PlacesWidget(forms.MultiWidget):
             forms.Textarea(attrs={'data-geo': 'formatted_address_full', }),
             forms.TextInput(attrs={'data-geo': 'lat', }),
             forms.TextInput(attrs={'data-geo': 'lng', }),
+            forms.TextInput(attrs={'data-geo': 'pincode', }),
         )
         super(PlacesWidget, self).__init__(widgets, attrs)
 
@@ -24,7 +25,7 @@ class PlacesWidget(forms.MultiWidget):
             return value.rsplit(',')
         if value:
             return [value.place, value.formatted_address, value.latitude,
-                    value.longitude]
+                    value.longitude, value.pincode]
         return [None, None]
 
     def format_output(self, rendered_widgets):
@@ -44,6 +45,10 @@ class PlacesWidget(forms.MultiWidget):
             'longitude': {
                 'html': rendered_widgets[3],
                 'label': _("longitude"),
+            },
+            'pincode': {
+                'html': rendered_widgets[4],
+                'label': _("pincode"),
             },
             'config': {
                 'map_widget_height': settings.MAP_WIDGET_HEIGHT or 500,

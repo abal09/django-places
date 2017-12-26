@@ -3,7 +3,9 @@
     <tbody class="places-map-detail">
       <tr>
         <td>{{ place.label|capfirst }}:</td>
-        <td colspan="3" id="map_place">{{ place.html }}</td>
+        <td id="map_place">{{ place.html }}</td>
+        <td>{{ pincode.label|capfirst }}:</td>
+        <td id="map_pincode">{{ pincode.html }}</td>
       </tr>
       <tr>
         <td>{{ formatted_address.label|capfirst }}:</td>

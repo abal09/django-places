@@ -19,6 +19,7 @@ class PlacesField(forms.MultiValueField):
                 label=_('formatted_address'), widget=forms.Textarea()),
             forms.DecimalField(label=_('latitude')),
             forms.DecimalField(label=_('longitude')),
+            forms.CharField(label=_('pincode')),
         )
         if 'initial' in kwargs:
             kwargs['initial'] = Places(*kwargs['initial'].split(','))
